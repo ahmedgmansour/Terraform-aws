@@ -28,13 +28,11 @@ resource "aws_route_table" "main-public" {
 }
 
 resource "aws_eip" "nat" {
-  vpc = true
   vpc_id = aws_vpc.vpc.id
 }
 
 resource "aws_nat_gateway" "nat-gw" {
-  vpc = true
-  vpc_id = aws_vpc.vpc.id
+  
 }
 
 resource "aws_route_table" "main-private" {
@@ -43,16 +41,16 @@ resource "aws_route_table" "main-private" {
 
 
 resource "aws_instance" "example" {
- vpc_id     = aws_vpc.vpc.id
+
 }
 
 resource "aws_security_group" "allow-ssh" {
-vpc_id      = aws_vpc.vpc.id
+ vpc_id      = aws_vpc.vpc.id
 }
 
-resource "aws_ebs_volume" "ebs-volume-1" {
-vpc_id      = aws_vpc.vpc.id
-}
+# resource "aws_ebs_volume" "ebs-volume-1" {
+#  vpc_id      = aws_vpc.vpc.id
+# }
 
 
 data "aws_ssm_parameter" "this" {
@@ -61,10 +59,11 @@ data "aws_ssm_parameter" "this" {
 
 
 resource "aws_route_table_association" "main-private-1-a" {
-vpc_id      = aws_vpc.vpc.id
+subnet_id      = module.vpc.private_id
+route_table_id = module.vpc.route-private_id
 }
 
-# resource "aws_key_pair" "webserver-key" {
-#   key_name   = "webserver-key"
-#   public_key = file("~/.ssh/id_rsa.pub")
-# }
+resource "aws_key_pair" "webserver-key" {
+  key_name   = "webserver-key"
+  public_key = file("~/.ssh/id_rsa.pub")
+}

@@ -52,3 +52,7 @@ output "route-private_id" {
 output "NATG_id" {
   value = aws_nat_gateway.nat-gw.id
 }
+
+output "Webserver-Public-IP" {
+  value = aws_instance.example.public_ip
+}

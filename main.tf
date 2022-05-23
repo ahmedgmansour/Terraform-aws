@@ -91,7 +91,7 @@ resource "aws_route_table" "main-private" {
   vpc_id = module.vpc.vpc_id
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = module.vpc.aws_nat_gateway.nat-gw
+    nat_gateway_id = module.vpc.NATG_id
   }
 
   tags = {
