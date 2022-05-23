@@ -41,12 +41,12 @@ output "eip_id" {
 }
 
 
-output "association_id" {
-  value = aws_route_table_association.main-private-1.id
+output "setup nat" {
+  value = aws_route_table.main-private.id
 }
 
-output "route-private_id" {
-  value = aws_route_table_association.main-private-1.id
+output "association_id" {
+  value = aws_route_table_association.main-private-1-a.id
 }
 
 output "NATG_id" {
