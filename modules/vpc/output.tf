@@ -41,7 +41,7 @@ output "eip_id" {
 }
 
 
-output "setup nat" {
+output "setup_nat" {
   value = aws_route_table.main-private.id
 }
 
