@@ -28,21 +28,19 @@ resource "aws_route_table" "main-public" {
 }
 
 resource "aws_eip" "nat" {
-  vpc_id = aws_vpc.vpc.id
+
 }
 
 resource "aws_nat_gateway" "nat-gw" {
-  
+  allocation_id = module.vpc.eip_id
+  subnet_id     = module.vpc.public_id
+  depends_on    = [module.vpc.igw_id]  
 }
 
 resource "aws_route_table" "main-private" {
   vpc_id = aws_vpc.vpc.id
 }  
 
-
-resource "aws_instance" "example" {
-
-}
 
 resource "aws_security_group" "allow-ssh" {
  vpc_id      = aws_vpc.vpc.id
@@ -58,10 +56,10 @@ data "aws_ssm_parameter" "this" {
 }
 
 
-resource "aws_route_table_association" "main-private-1-a" {
-subnet_id      = module.vpc.private_id
-route_table_id = module.vpc.route-private_id
-}
+# resource "aws_route_table_association" "main-private-1-a" {
+# subnet_id      = module.vpc.private_id
+# route_table_id = module.vpc.route-private_id
+# }
 
 resource "aws_key_pair" "webserver-key" {
   key_name   = "webserver-key"
