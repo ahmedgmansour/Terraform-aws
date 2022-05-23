@@ -56,10 +56,10 @@ data "aws_ssm_parameter" "this" {
 }
 
 
-# resource "aws_route_table_association" "main-private-1-a" {
-# subnet_id      = module.vpc.private_id
-# route_table_id = module.vpc.route-private_id
-# }
+resource "aws_route_table_association" "main-private-1-a" {
+  subnet_id      = aws_subnet.main-private-1.id
+  route_table_id = aws_route_table.main-private.id
+}
 
 resource "aws_key_pair" "webserver-key" {
   key_name   = "webserver-key"
