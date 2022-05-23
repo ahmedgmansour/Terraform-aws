@@ -110,7 +110,7 @@ resource "aws_route_table_association" "main-private-1-a" {
 
 #web server
 resource "aws_instance" "webserver" {
-  ami                         = module.vpc.
+  ami                         = module.vpc.ami_id
   instance_type               = "t3.micro"
   key_name                    = aws_key_pair.webserver-key.key_name
   associate_public_ip_address = true
