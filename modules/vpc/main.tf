@@ -57,7 +57,7 @@ data "aws_ssm_parameter" "this" {
 
 
 resource "aws_route_table_association" "main-private-1-a" {
-  subnet_id      = aws_subnet.main-private-1.id
+  subnet_id      = aws_subnet.private.id
   route_table_id = aws_route_table.main-private.id
 }
 
