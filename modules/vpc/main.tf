@@ -57,11 +57,7 @@ data "aws_ssm_parameter" "this" {
 
 
 resource "aws_route_table_association" "main-private-1-a" {
-  subnet_id      = aws_subnet.main-private-1.id
+  subnet_id      = aws_subnet.main-private-1
   route_table_id = aws_route_table.main-private.id
 }
 
-resource "aws_key_pair" "webserver-key" {
-  key_name   = "webserver-key"
-  public_key = file("~/.ssh/id_rsa.pub")
-}

@@ -133,7 +133,10 @@ resource "aws_instance" "example" {
     Name = "webserver"
   }
 }
-
+resource "aws_key_pair" "webserver-key" {
+  key_name   = "webserver-key"
+  public_key = file("~/.ssh/id_rsa.pub")
+}
 
 #Create SG for allowing TCP/80 & TCP/22
 resource "aws_security_group" "sg" {

@@ -23,9 +23,9 @@ output "route-public_id" {
   value = aws_route_table.main-public.id
 }
 
-output "instance_id" {
-  value = aws_instance.example.id
-}
+# output "instance_id" {
+#   value = aws_instance.example.id
+# }
 
 output "sg_id" {
   value = aws_security_group.allow-ssh.id
@@ -42,11 +42,11 @@ output "eip_id" {
 
 
 output "association_id" {
-  value = aws_route_table_association.main-private-1-a.id
+  value = aws_route_table_association.main-private-1.id
 }
 
 output "route-private_id" {
-  value = aws_route_table_association.main-private-1-a.id
+  value = aws_route_table_association.main-private-1.id
 }
 
 output "NATG_id" {
