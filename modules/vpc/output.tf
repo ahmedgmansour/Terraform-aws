@@ -31,9 +31,9 @@ output "sg_id" {
   value = aws_security_group.allow-ssh.id
 }
 
-output "ebs_id" {
-  value = aws_ebs_volume.ebs-volume-1.id
-}
+# output "ebs_id" {
+#   value = aws_ebs_volume.ebs-volume-1.id
+# }
 
 
 output "eip_id" {
@@ -53,6 +53,3 @@ output "NATG_id" {
   value = aws_nat_gateway.nat-gw.id
 }
 
-output "Webserver-Public-IP" {
-  value = aws_instance.example.public_ip
-}
