@@ -102,10 +102,8 @@ resource "aws_route_table" "main-private" {
 # route associations private
 resource "aws_route_table_association" "main-private-1-a" {
   subnet_id      = module.vpc.private_id
-  route_table_id = module.vpc.route-private_id
+  route_table_id = module.vpc.setup_nat
 }
-
-
 
 
 #web server

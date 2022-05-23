@@ -33,7 +33,7 @@ resource "aws_eip" "nat" {
 
 resource "aws_nat_gateway" "nat-gw" {
   allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.main-public-1.id
+  subnet_id     = aws_subnet.public.id
   depends_on    = [aws_internet_gateway.main-gw]  
 }
 
