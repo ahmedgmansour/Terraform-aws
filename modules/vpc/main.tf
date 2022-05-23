@@ -32,6 +32,11 @@ resource "aws_eip" "nat" {
   vpc_id = aws_vpc.vpc.id
 }
 
+resource "aws_nat_gateway" "nat-gw" {
+  vpc = true
+  vpc_id = aws_vpc.vpc.id
+}
+
 resource "aws_route_table" "main-private" {
   vpc_id = aws_vpc.vpc.id
 }  
@@ -59,7 +64,7 @@ resource "aws_route_table_association" "main-private-1-a" {
 vpc_id      = aws_vpc.vpc.id
 }
 
-resource "aws_key_pair" "webserver-key" {
-  key_name   = "webserver-key"
-  public_key = file("~/.ssh/id_rsa.pub")
-}
+# resource "aws_key_pair" "webserver-key" {
+#   key_name   = "webserver-key"
+#   public_key = file("~/.ssh/id_rsa.pub")
+# }

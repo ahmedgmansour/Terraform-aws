@@ -59,7 +59,7 @@ resource "aws_route_table" "main-public" {
   vpc_id = module.vpc.vpc_id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = module.vpc.aws_internet_gateway.main-gw
+    gateway_id = module.vpc.igw_id
   }
 
   tags = {
@@ -69,17 +69,53 @@ resource "aws_route_table" "main-public" {
 
 # route associations public
 resource "aws_route_table_association" "main-public-1-a" {
-  subnet_id      = module.vpc.aws_subnet.public
-  route_table_id = module.vpc.aws_route_table.main-public
+  subnet_id      = module.vpc.public_id
+  route_table_id = module.vpc.route-public_id
 }
 
+
+
+# nat gw
+resource "aws_eip" "nat" {
+  vpc = true
+}
+
+resource "aws_nat_gateway" "nat-gw" {
+  allocation_id = module.vpc.eip_id
+  subnet_id     = module.vpc.public_id
+  depends_on    = [module.vpc.igw_id]
+}
+
+# VPC setup for NAT
+resource "aws_route_table" "main-private" {
+  vpc_id = module.vpc.vpc_id
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = module.vpc.aws_nat_gateway.nat-gw
+  }
+
+  tags = {
+    Name = "main-private-1"
+  }
+}
+
+# route associations private
+resource "aws_route_table_association" "main-private-1-a" {
+  subnet_id      = module.vpc.private_id
+  route_table_id = module.vpc.route-private_id
+}
+
+
+
+
+#web server
 resource "aws_instance" "webserver" {
-  ami                         = module.vpc.data.aws_ssm_parameter.this.value
+  ami                         = module.vpc.
   instance_type               = "t3.micro"
-  key_name                    = module.vpc.aws_key_pair.webserver-key.key_name
+  key_name                    = aws_key_pair.webserver-key.key_name
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.sg.id]
-  subnet_id                   = module.vpc.aws_subnet.public
+  subnet_id                   = module.vpc.public_id
   provisioner "remote-exec" {
     inline = [
       "sudo yum -y install httpd && sudo systemctl start httpd",

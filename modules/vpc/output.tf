@@ -48,3 +48,7 @@ output "association_id" {
 output "route-private_id" {
   value = aws_route_table_association.main-private-1-a.id
 }
+
+output "NATG_id" {
+  value = aws_nat_gateway.nat-gw.id
+}
